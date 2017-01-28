@@ -8,9 +8,9 @@ The easiest way to find out if your JavaScript project meets its dependencies' l
 
 A few examples of license obligations which are not uncommon:
 
-* **State Changes** - You must state significant changes made to the package.
+* **State Changes** - You must state significant changes made to the software.
 * **Disclose Source** - You must disclose your source code when you distribute your software.
-* **Give Credit** - You must display an acknowledgement in all advertising materials mentioning features or use of the package.
+* **Give Credit** - You must display an acknowledgement in all advertising materials mentioning features or use of the software.
 
 ## Usage
 
