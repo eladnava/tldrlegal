@@ -48,6 +48,11 @@ tldrlegal --help
 1. This tool is not a replacement for proper legal consultation.
 2. Please be advised that the information provided by this tool may not be 100% accurate.
 
+## Credits
+
+1. Thanks to all the contributors of [TLDRLegal.com](https://tldrlegal.com) who helped make this possible.
+2. Thanks to all the contributors of [franciscop/legally](https://github.com/franciscop/legally), a package that determines your dependencies' licenses with great accuracy.
+
 ## License
 
 Apache 2.0
