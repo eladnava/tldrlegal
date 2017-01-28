@@ -6,7 +6,7 @@ The easiest way to find out if your JavaScript project meets its dependencies' l
 
 [tldrlegal](https://github.com/eladnava/tldrlegal) is a Node.js command-line tool that checks your dependencies for license requirements using an unofficial legal resource called [TLDRLegal.com](https://tldrlegal.com/) which provides plain English software license explanations.
 
-A few examples of license obligations which are not uncommon:
+A few examples of license obligations in JavaScript dependencies which are not uncommon:
 
 * **State Changes** - You must state significant changes made to the software.
 * **Disclose Source** - You must disclose your source code when you distribute your software.
