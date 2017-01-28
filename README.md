@@ -4,19 +4,13 @@
 
 The easiest way to find out if your JavaScript project meets its dependencies' licensing requirements.
 
-`tldrlegal` is a Node.js command-line tool that checks your dependencies for license requirements using [TLDRLegal.com](https://tldrlegal.com/), a legal resource that provides plain English software license explanations.
-
-This package relies on [legally](https://github.com/franciscop/legally) to determine your dependencies' licenses (using the `package.json` / `README.md` / `LICENSE` files), and then determines which obligations must be met for each package using information obtained from [TLDRLegal.com](https://tldrlegal.com/).
+[tldrlegal](https://github.com/eladnava/tldrlegal) is a Node.js command-line tool that checks your dependencies for license requirements using an unofficial legal resource called [TLDRLegal.com](https://tldrlegal.com/) which provides plain English software license explanations.
 
 A few examples of license obligations which are not uncommon:
 
 * **State Changes** - You must state significant changes made to the package.
 * **Disclose Source** - You must disclose your source code when you distribute your software.
 * **Give Credit** - You must display an acknowledgement in all advertising materials mentioning features or use of the package.
-
-## Preview
-
-![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/preview.png) 
 
 ## Usage
 
@@ -26,6 +20,10 @@ npm install -g tldrlegal
 cd my-js-project
 tldrlegal
 ```
+
+## Preview
+
+![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/preview.png) 
 
 ## Command Line Options
 
