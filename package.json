@@ -1,0 +1,26 @@
+{
+  "name": "tldrlegal",
+  "version": "1.0.0",
+  "description": "The easiest way to find out if your JavaScript project meets its dependencies' licensing requirements.",
+  "main": "index.js",
+  "bin": {
+    "tldrlegal": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eladnava/tldrlegal.git"
+  },
+  "author": "Elad Nava <eladnava@gmail.com> (http://eladnava.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/eladnava/tldrlegal/issues"
+  },
+  "homepage": "https://github.com/eladnava/tldrlegal#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "legally": "^2.8.1"
+  }
+}
