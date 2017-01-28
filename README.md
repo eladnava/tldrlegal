@@ -23,7 +23,7 @@ tldrlegal
 
 ## Preview
 
-![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/preview.png) 
+![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/output.png) 
 
 ## Command Line Options
 
@@ -42,10 +42,6 @@ tldrlegal --help
 ## Requirements
 
 * Node.js v6.x.x or newer
-
-## Sample Output
-
-![Output](https://raw.github.com/eladnava/tldrlegal/master/assets/output.png) 
 
 ## Disclaimer
 
