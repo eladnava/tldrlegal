@@ -80,4 +80,4 @@ for (var obligation in obligationInfo) {
 }
 
 // Output everything
-output(results, unknownLicenses);
+output(results, unknownLicenses, packages);
