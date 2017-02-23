@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+var fs = require('fs');
+var log = require('npmlog');
 var program = require('commander');
 var output = require('./lib/output');
 var licensing = require('./lib/licensing');
@@ -13,8 +15,16 @@ program
     .option('--folder <path>', 'set path to project root with node_modules/ directory')
     .parse(process.argv);
 
+// Main project directory
+var projectDirectory = program.folder || process.cwd();
+
+// Is the node_modules directory missing?
+if (!fs.existsSync(projectDirectory + '/node_modules')) {
+    return log.error('tldrlegal', 'Please run this tool from within a JavaScript project with a node_modules directory.');
+}
+
 // Fetch dependencies and their licenses by directory
-var packages = legally(program.folder || process.cwd());
+var packages = legally(projectDirectory);
 
 // Result variables
 var results = {}, unknownLicenses = [];
