@@ -1,6 +1,6 @@
 {
   "name": "tldrlegal",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The easiest way to find out if your JavaScript project meets its dependencies' licensing requirements.",
   "main": "index.js",
   "bin": {
