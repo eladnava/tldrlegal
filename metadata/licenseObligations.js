@@ -49,6 +49,6 @@ module.exports = {
     },
     'CC0': {
     },
-    'Public domain': {
+    'Public Domain': {
     }
 };
