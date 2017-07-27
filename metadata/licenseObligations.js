@@ -50,5 +50,7 @@ module.exports = {
     'CC0': {
     },
     'Public Domain': {
+    },
+    'Unlicense': {
     }
 };
