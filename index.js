@@ -13,7 +13,7 @@ var licenseObligations = require('./metadata/licenseObligations');
 program
     .version('1.0.0')
     .option('--folder <path>', 'set path to project root with node_modules/ directory')
-    .option('--closed-source', 'whether the application is being distributed as closed-source (for example as binary or client-side with webpack)')
+    .option('--closed-source', 'whether the project is being distributed as closed-source (for example as a binary or client-side with webpack)')
     .parse(process.argv);
 
 // Main project directory
@@ -50,7 +50,7 @@ for (var packageName in packages) {
     // Traverse obligations for this license
     for (var obligation in obligations) {
         // Is this an irrelevant obligation?
-        if (licensing.isIrrelevant(obligation, program.closedSource)) {
+        if (!licensing.isObligationRelevant(obligation, program.closedSource)) {
             continue;
         }
 
@@ -67,7 +67,7 @@ for (var packageName in packages) {
 // Traverse possible license obligations
 for (var obligation in obligationInfo) {
     // Is this an irrelevant obligation?
-    if (licensing.isIrrelevant(obligation, program.closedSource)) {
+    if (!licensing.isObligationRelevant(obligation, program.closedSource)) {
         continue;
     }
 

@@ -37,7 +37,7 @@ tldrlegal --help
     -h, --help       output usage information
     -V, --version    output the version number
     --folder <path>  set path to project root with node_modules/ directory
-    --closed-source  whether the application is being distributed as closed-source (for example as binary or client-side with webpack)
+    --closed-source  whether the project is being distributed as closed-source (for example as a binary or client-side with webpack)
 ```
 
 ## Requirements
