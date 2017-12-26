@@ -23,7 +23,7 @@ tldrlegal
 
 ## Preview
 
-![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/output.png) 
+![Preview](https://raw.github.com/eladnava/tldrlegal/master/assets/output.png)
 
 ## Command Line Options
 
@@ -37,6 +37,7 @@ tldrlegal --help
     -h, --help       output usage information
     -V, --version    output the version number
     --folder <path>  set path to project root with node_modules/ directory
+    --closed-source  whether the application is being distributed as closed-source (for example as binary or client-side with webpack)
 ```
 
 ## Requirements
