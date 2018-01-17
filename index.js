@@ -8,12 +8,14 @@ var licensing = require('./lib/licensing');
 var legally = require('legally/lib/legally');
 var obligationInfo = require('./metadata/obligationInfo');
 var licenseObligations = require('./metadata/licenseObligations');
+var licenseCompatibility = require('./metadata/licenseCompatibility');
 
 // Define arguments and options
 program
     .version('1.0.0')
     .option('--folder <path>', 'set path to project root with node_modules/ directory')
     .option('--closed-source', 'whether the project is being distributed as closed-source (for example as a binary or client-side with webpack)')
+    .option('--compatibility', 'output license compatibility (whether all dependencies can be distributed together)')
     .parse(process.argv);
 
 // Main project directory
@@ -28,12 +30,17 @@ if (!fs.existsSync(projectDirectory + '/node_modules')) {
 var packages = legally(projectDirectory);
 
 // Result variables
-var results = {}, unknownLicenses = [];
+var results = {}, unknownLicenses = [], allPackageLicenses = {};
 
 // Traverse all dependencies
 for (var packageName in packages) {
     // Get SPDX license code
     var license = licensing.getPreferredPackageLicense(packages[packageName], program.closedSource);
+
+    // set up for checking compatibility
+    if (program.compatibility) {
+        allPackageLicenses[packageName] = license;
+    }
 
     // Get obligations for this license
     var obligations = licenseObligations[license];
@@ -62,6 +69,51 @@ for (var packageName in packages) {
         // Add current package and its license under this obligation
         results[obligation].push({name: packageName, license: license});
     }
+}
+
+if (program.compatibility) {
+    var licenseTypes = {};
+    for (var packageName in allPackageLicenses) {
+        var license = allPackageLicenses[packageName];
+        var licenseType = licenseCompatibility[license.replace(/\s/, '-')];
+
+        if (licenseType) {
+            licenseTypes[license] = licenseType;
+        } else {
+            unknownLicenses.push([packageName, license]);
+        }
+    }
+
+    var licenses = Object.keys(licenseTypes);
+    var pairwise = []
+    for (var i = 0; i < licenses.length; i++) {
+        for (var j = i + 1; j < licenses.length; j++) {
+            pairwise.push([licenses[i], licenses[j]], [licenses[j], licenses[i]])
+        }
+    }
+
+    pairwise.forEach((pair) => {
+        console.log(licenseTypes[pair[0]], licenseTypes[pair[1]]);
+        var compatibile = licensing.forwardCompatibility(licenseTypes[pair[0]], licenseTypes[pair[1]]);
+
+        if (!compatibile) {
+            var packages = [];
+
+            var derivativePackages = [];
+            for (var packageName in allPackageLicenses) {
+                if (allPackageLicenses[packageName] === pair[1]) {
+                    derivativePackages.push(packageName);
+                }
+            }
+            for (var packageName in allPackageLicenses) {
+                if (allPackageLicenses[packageName] === pair[0]) {
+                    var name = `${packageName} is not compaitble with ${derivativePackages.join(',')}`;
+                    packages.push({name: name, license: `${pair[0]} < ${pair[1]}` });
+                }
+            }
+            results['compatibility'] = packages;
+        }
+    })
 }
 
 // Traverse possible license obligations
