@@ -37,4 +37,8 @@ module.exports = {
         title: 'Include Notice',
         desc: 'If these packages have a "NOTICE" file with attribution notes, you must include that NOTICE when you distribute. You may append to these NOTICE files.'
     },
+    compatibility: {
+        title: 'Ensure Compatibility',
+        desc: 'You may not distribute these packages together due to forward compatibility requirements.',
+    },
 }
