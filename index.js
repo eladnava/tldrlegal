@@ -5,7 +5,7 @@ var log = require('npmlog');
 var program = require('commander');
 var output = require('./lib/output');
 var licensing = require('./lib/licensing');
-var legally = require('legally/lib/legally');
+var legally = require('legally/src/legally');
 var obligationInfo = require('./metadata/obligationInfo');
 var licenseObligations = require('./metadata/licenseObligations');
 
@@ -25,60 +25,64 @@ if (!fs.existsSync(projectDirectory + '/node_modules')) {
 }
 
 // Fetch dependencies and their licenses by directory
-var packages = legally(projectDirectory);
+legally(projectDirectory).then(function (packages) {
+    // Result variables
+    var results = {}, unknownLicenses = [];
 
-// Result variables
-var results = {}, unknownLicenses = [];
+    // Traverse all dependencies
+    for (var packageName in packages) {
+        // Get SPDX license code
+        var license = licensing.getPreferredPackageLicense(packages[packageName], program.closedSource);
 
-// Traverse all dependencies
-for (var packageName in packages) {
-    // Get SPDX license code
-    var license = licensing.getPreferredPackageLicense(packages[packageName], program.closedSource);
+        // Get obligations for this license
+        var obligations = licenseObligations[license];
 
-    // Get obligations for this license
-    var obligations = licenseObligations[license];
+        // No obligations documented for this license?
+        if (!obligations) {
+            // Add to list of unknown licenses
+            unknownLicenses.push([packageName, license]);
 
-    // No obligations documented for this license?
-    if (!obligations) {
-        // Add to list of unknown licenses
-        unknownLicenses.push([packageName, license]);
+            // Nothing else to do here
+            continue;
+        }
 
-        // Nothing else to do here
-        continue;
+        // Traverse obligations for this license
+        for (var obligation in obligations) {
+            // Is this an irrelevant obligation?
+            if (!licensing.isObligationRelevant(obligation, program.closedSource)) {
+                continue;
+            }
+
+            // Prepare an array of packages for this obligation
+            if (!results[obligation]) {
+                results[obligation] = [];
+            }
+
+            // Add current package and its license under this obligation
+            results[obligation].push({ name: packageName, license: license });
+        }
     }
 
-    // Traverse obligations for this license
-    for (var obligation in obligations) {
+    // Traverse possible license obligations
+    for (var obligation in obligationInfo) {
         // Is this an irrelevant obligation?
         if (!licensing.isObligationRelevant(obligation, program.closedSource)) {
             continue;
         }
 
-        // Prepare an array of packages for this obligation
-        if (!results[obligation]) {
-            results[obligation] = [];
+        // Already have results for this obligation?
+        if (results[obligation]) {
+            continue;
         }
 
-        // Add current package and its license under this obligation
-        results[obligation].push({name: packageName, license: license});
-    }
-}
-
-// Traverse possible license obligations
-for (var obligation in obligationInfo) {
-    // Is this an irrelevant obligation?
-    if (!licensing.isObligationRelevant(obligation, program.closedSource)) {
-        continue;
+        // Initialize obligation array for summary view
+        results[obligation] = [];
     }
 
-    // Already have results for this obligation?
-    if (results[obligation]) {
-        continue;
-    }
-
-    // Initialize obligation array for summary view
-    results[obligation] = [];
-}
-
-// Output everything
-output(results, unknownLicenses, packages);
+    // Output everything
+    output(results, unknownLicenses, packages);
+})
+.catch(function(err) {
+    // Output error
+    log.error('tldrlegal', 'Running legally failed: ' + err);
+});
