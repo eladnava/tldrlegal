@@ -20,7 +20,7 @@ program
 var projectDirectory = program.folder || process.cwd();
 
 // Is the node_modules directory missing?
-if (!fs.existsSync(projectDirectory + '/node_modules')) {
+if (!fs.existsSync(projectDirectory + '/node_modules') && !projectDirectory.includes('node_modules')) {
     return log.error('tldrlegal', 'Please run this tool from within a JavaScript project with a node_modules directory.');
 }
 
