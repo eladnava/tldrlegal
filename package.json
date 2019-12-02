@@ -21,7 +21,7 @@
   "homepage": "https://github.com/eladnava/tldrlegal#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "legally": "^3.3.7",
+    "legally": "^3.3.8",
     "npmlog": "^4.0.2"
   }
 }
